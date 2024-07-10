@@ -2,24 +2,24 @@ spring:
   application:
     name: chanlog
 
-#  security:
-#    oauth2:
-#      client:
-#        registration:
-#          github:
-#            client-id: Iv23liGJd6oGPfPKXKRJ
-#            client-secret: 9dcfa625e287f4937317e310fbe30b4cde70f5de
-#            scope:
-#              - email
-#              - profile
-#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
-#            client-name: GitHub
-#        provider:
-#          github:
-#            authorization-uri: https://github.com/login/oauth/authorize
-#            token-uri: https://github.com/login/oauth/access_token
-#            user-info-uri: https://api.github.com/user
-#            user-name-attribute: id
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: Iv23liGQzB5u0qpEJgOQ
+            client-secret: 7a052982e7f58824b1f17a44a0eaa50bc5079a4d
+            scope:
+              - email
+              - profile
+            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            client-name: GitHub
+        provider:
+          github:
+            authorization-uri: https://github.com/login/oauth/authorize
+            token-uri: https://github.com/login/oauth/access_token
+            user-info-uri: https://api.github.com/user
+            user-name-attribute: id
 
 
   datasource:

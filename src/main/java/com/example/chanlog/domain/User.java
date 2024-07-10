@@ -31,6 +31,14 @@ public class User {
     @Column(nullable = false, name = "registration_date", updatable = false)
     private LocalDateTime registrationDate = LocalDateTime.now();
 
+    //oauth2 로그인을 위한 socialid
+    @Column(name = "social_id", length = 255)
+    private String socialId;
+
+    //oauth2 로그인을 위한 provider
+    @Column(name = "provider", length = 50)
+    private String provider;
+
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "user_roles",

@@ -3,6 +3,7 @@ package com.example.chanlog.securiy;
 import com.example.chanlog.domain.User;
 import com.example.chanlog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -19,7 +20,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         if (user == null) {
             throw new UsernameNotFoundException("사용자가 없습니다.");
         }
-        org.springframework.security.core.userdetails.User.UserBuilder userBuilder = org.springframework.security.core.userdetails.User.withUsername(username);
+        UserBuilder userBuilder = org.springframework.security.core.userdetails.User.withUsername(username);
         userBuilder.password(user.getPassword());
         userBuilder.roles(user.getRoles().stream().map(role -> role.getName()).toArray(String[]::new));
 

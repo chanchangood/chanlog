@@ -11,15 +11,17 @@
     <input type="text" id="username" name="username" required><br><br>
 
     <label for="password">비밀번호 : </label>
-    <input type="text" id="password" name="password" required><br><br>
+    <input type="password" id="password" name="password" required><br><br>
 
     <button type="submit">로그인</button>
 
-    <a th:href="@{/oauth2/authorization/github}" class="btn btn-primary">Login with GitHub</a>
-
-    <div>
-        <a href="/userregform">회원가입</a>
-    </div>
 </form>
+
+<a th:href="@{/oauth2/authorization/github}" class="btn btn-primary">Login with GitHub</a>
+
+<div>
+    <a href="/userregform">회원가입</a>
+</div>
+
 </body>
 </html>
