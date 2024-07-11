@@ -1,11 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>login</title>
 </head>
 <body>
+<a href="/">Chanslog</a><br>
 <h2>라이언 로그인</h2>
+
+<!-- 에러 메시지가 있는 경우에만 출력 -->
+<div th:if="${param.error}">
+    <p style="color: red;">아이디 또는 비밀번호가 일치하지 않습니다. 다시 시도해주세요.</p>
+</div>
+
 <form action="/login" method="post">
     <label for="username">아이디 : </label>
     <input type="text" id="username" name="username" required><br><br>

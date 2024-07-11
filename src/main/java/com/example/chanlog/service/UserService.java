@@ -36,6 +36,11 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
+    @Transactional(readOnly = true)
+    public User findByEmail(String email){
+        return userRepository.findByEmail(email);
+    }
+
     //oauth
     @Transactional(readOnly = true)
     public Optional<User> findByProviderAndSocialId(String provider, String socialId) {

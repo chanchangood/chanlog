@@ -5,15 +5,25 @@
     <title>home</title>
 </head>
 <body>
+<a href="/">Chanslog</a><br>
+
+<div sec:authorize="isAnonymous()">
+    <a href="/loginform">로그인</a>
+</div>
+
 <div sec:authorize="isAuthenticated()">
     <p>안녕하세요. <span sec:authentication="name"></span>님^^ </p>
     <a href="/mypage">내 정보보기</a><br>
     <a href="/logout">로그아웃</a>
 </div>
 
-<div sec:authorize="isAnonymous()">
-    <p>우선 로그인을 하십시오</p>
-    <a href="/loginform">로그인</a>
-</div>
+<!--TODO-->
+<!--<div>-->
+<!--    <p>최신, 인기 게시글 보여주기</p>-->
+<!--</div>-->
+
+
+
+
 </body>
 </html>

@@ -4,8 +4,8 @@ import com.example.chanlog.domain.SocialLoginInfo;
 import com.example.chanlog.domain.User;
 import com.example.chanlog.service.SocialLoginInfoService;
 import com.example.chanlog.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,7 +23,6 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
     private final SocialLoginInfoService socialLoginInfoService;
-    private final PasswordEncoder passwordEncoder;
 
     @GetMapping("/")
     public String home() {
@@ -41,17 +40,29 @@ public class UserController {
     }
 
     @PostMapping("/userreg")
-    public String userreg(@ModelAttribute("user") User user, BindingResult result) {
+    public String userreg(@ModelAttribute("user") @Valid User user, BindingResult result) {
+        // 유효성 검사에서 오류가 있을 경우, 회원가입 폼 다시 보여주기
         if (result.hasErrors()) {
             return "userregform";
         }
+
+        // 이미 존재하는 사용자 이름 확인
         User byUsername = userService.findByUsername(user.getUsername());
         if (byUsername != null) {
             result.rejectValue("username", null, "이미 사용중인 아이디입니다.");
-            return "users/userregerror";
+            return "users/userregerror";// 이미 사용 중인 아이디 오류 페이지 보여주기
         }
 
+        // 이미 존재하는 이메일 확인
+        User byEmail = userService.findByEmail(user.getEmail());
+        if (byEmail != null) {
+            result.rejectValue("email", null, "이미 사용중인 이메일입니다.");
+            return "users/userregerror";// 이미 사용 중인 이메일 오류 페이지 보여주기
+        }
+
+        // 회원 가입 로직 처리
         userService.registUser(user);
+        //회원 가입 되면 welcome페이지로 이동
         return "redirect:/welcome";
     }
 
@@ -72,8 +83,11 @@ public class UserController {
 
     //oauth로그인
     @GetMapping("/registerSocialUser")
-    public String registerSocialUser(@RequestParam("provider") String provider, @RequestParam("socialId")
-    String socialId, @RequestParam("name") String name, @RequestParam("uuid") String uuid, Model model) {
+    public String registerSocialUser(@RequestParam("provider") String provider,
+                                     @RequestParam("socialId") String socialId,
+                                     @RequestParam("name") String name,
+                                     @RequestParam("uuid") String uuid,
+                                     Model model) {
         model.addAttribute("provider", provider);
         model.addAttribute("socialId", socialId);
         model.addAttribute("name", name);

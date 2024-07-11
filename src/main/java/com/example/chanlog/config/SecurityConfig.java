@@ -5,6 +5,7 @@ import com.example.chanlog.securiy.CustomOAuth2AuthenticationSuccessHandler;
 import com.example.chanlog.securiy.CustomUserDetailsService;
 import com.example.chanlog.service.SocialUserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.web.servlet.ServletListenerRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -113,6 +115,13 @@ public class SecurityConfig {
         config.setAllowedMethods(List.of("GET","POST","DELETE"));
         source.registerCorsConfiguration("/**",config);
         return source;
+    }
+
+
+    //HTTP세션 이벤트를 Spring 이벤트로 변환 해 세션의 생명주기를 관리하는 메서드 추가
+    @Bean
+    public static ServletListenerRegistrationBean<HttpSessionEventPublisher> httpSessionEventPublisher() {
+        return new ServletListenerRegistrationBean<>(new HttpSessionEventPublisher());
     }
 
 

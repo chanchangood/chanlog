@@ -1,13 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>join error</title>
 </head>
 <body>
-<h2>회원가입 에러</h2>
-<p>사용자 아이디가 이미 사용 중입니다. 다시 시도해 주세요.</p>
-<a href="/userregform">회원가입</a>
-<a href="/loginform">로그인</a>
+<a href="/">Chanslog</a><br>
+<div>
+    <h2>회원가입 에러</h2>
+    <ul>
+        <li th:if="${#fields.hasErrors('user.username')}" th:errors="*{user.username}"></li>
+        <li th:if="${#fields.hasErrors('user.email')}" th:errors="*{user.email}"></li>
+    </ul>
+    <p>다시 시도해 주세요.</p>
+
+    <a href="/userregform">회원가입</a>
+    <a href="/loginform">로그인</a>
+</div>
 </body>
 </html>
