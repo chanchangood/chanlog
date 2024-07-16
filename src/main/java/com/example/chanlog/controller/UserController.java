@@ -6,6 +6,11 @@ import com.example.chanlog.service.SocialLoginInfoService;
 import com.example.chanlog.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -23,6 +29,7 @@ import java.util.Optional;
 public class UserController {
     private final UserService userService;
     private final SocialLoginInfoService socialLoginInfoService;
+
 
     @GetMapping("/")
     public String home() {
@@ -71,10 +78,6 @@ public class UserController {
         return "users/loginform";
     }
 
-    @GetMapping("/loginerror")
-    public String loginError() {
-        return "users/loginerror";
-    }
 
     @GetMapping("/welcome")
     public String welcome() {

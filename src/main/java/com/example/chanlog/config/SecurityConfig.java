@@ -39,8 +39,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/userregform","/userreg","/", "/loginform").permitAll()
+                        .requestMatchers("/userregform","/userreg","/", "/loginform", "boards/**").permitAll()
                         .requestMatchers("/oauth2/**", "/login/oauth2/code/github","/registerSocialUser","/saveSocialUser").permitAll()
+                        .requestMatchers("/js/**", "/image/**", "/css/**").permitAll()
                         .anyRequest().authenticated()
                 )
 //                .formLogin(Customizer.withDefaults()) 기본 제공 폼을 사용하는 것
@@ -48,7 +49,7 @@ public class SecurityConfig {
                 .formLogin(form -> form
                         .loginPage("/loginform")
                         .loginProcessingUrl("/login")
-                        .defaultSuccessUrl("/welcome")
+                        .defaultSuccessUrl("/")
                         .permitAll()
                 )
                 .logout(logout -> logout
