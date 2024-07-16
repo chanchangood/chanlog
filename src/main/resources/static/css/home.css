@@ -1,0 +1,33 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+}
+
+#logo {
+    text-decoration: none;
+    font-size: 24px;
+    color: #007BFF;
+}
+
+.auth {
+    text-align: right;
+    margin-top: 20px;
+}
+
+.auth a {
+    text-decoration: none;
+    color: #007BFF;
+    margin-left: 15px;
+}
+
+.auth a:hover {
+    text-decoration: underline;
+    color: #0056b3;
+}
+
+p {
+    margin: 10px 0;
+}

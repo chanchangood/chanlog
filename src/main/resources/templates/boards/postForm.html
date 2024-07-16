@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>새로운 보드 작성</title>
+    <link rel="stylesheet" th:href="@{/css/postForm.css}">
+</head>
+<body>
+<div class="box">
+    <h1>새로운 보드 작성</h1>
+
+    <form th:action="@{/postForm}" method="post" th:object="${board}">
+        <input type="hidden" th:field="*{id}">
+        <input type="hidden" th:field="*{author}">
+
+        <div>
+            <label for="title">Title: </label>
+            <input type="text" id="title" th:field="*{title}" required/>
+        </div>
+
+        <div>
+            <label for="content">Content: </label>
+            <input type="text" id="content" th:field="*{content}" required/>
+        </div>
+
+        <div>
+            <label for="tag">Tag: </label>
+            <input type="text" id="tag" th:field="*{tag}" required/>
+        </div>
+
+        <div>
+            <input type="submit" value="Create">
+        </div>
+    </form>
+</div>
+
+</body>
+</html>
