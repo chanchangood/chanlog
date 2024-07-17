@@ -62,7 +62,7 @@ body {
 .card-header {
     background-color: #f0f0f0;
     padding: 10px;
-    border-bottom: 1px solid #333;
+    border-bottom: 1px solid #333333;
 }
 
 .card-header h3 {
@@ -91,72 +91,6 @@ body {
     background-color: #007BFF;
     color: white;
 }
-
-/**/
-
-.latest-posts {
-    margin: 20px 0;
-}
-
-.latest-posts h2 {
-    margin-bottom: 15px;
-    color: #333;
-}
-
-.latest-posts .card-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
-}
-
-.latest-posts .card {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    width: calc(33.333% - 15px);
-    overflow: hidden;
-    transition: transform 0.2s;
-    text-decoration: none;
-}
-
-.latest-posts .card:hover {
-    transform: scale(1.02);
-}
-
-.latest-posts .card-header {
-    background-color: #f0f0f0;
-    padding: 10px;
-    border-bottom: 1px solid #333;
-}
-
-.latest-posts .card-header h3 {
-    color: #0056b3;
-    margin: 0;
-}
-
-.latest-posts .card-body {
-    padding: 15px;
-}
-
-.latest-posts .card-body p {
-    margin: 5px 0;
-    color: #555;
-}
-
-.latest-posts .card-body a {
-    color: #555;
-    border: 1px solid #007BFF;
-    padding: 5px;
-    border-radius: 3px;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.latest-posts .card-body a:hover {
-    background-color: #007BFF;
-    color: white;
-}
-/**/
 
 .pagination {
     display: flex;
@@ -195,4 +129,3 @@ body {
     background-color: #007BFF;
     color: white;
 }
-

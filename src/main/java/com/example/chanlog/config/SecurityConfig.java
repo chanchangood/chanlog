@@ -42,6 +42,7 @@ public class SecurityConfig {
                         .requestMatchers("/userregform","/userreg","/", "/loginform", "boards/**").permitAll()
                         .requestMatchers("/oauth2/**", "/login/oauth2/code/github","/registerSocialUser","/saveSocialUser").permitAll()
                         .requestMatchers("/js/**", "/image/**", "/css/**").permitAll()
+                        .requestMatchers("/userBlog/**").permitAll()
                         .anyRequest().authenticated()
                 )
 //                .formLogin(Customizer.withDefaults()) 기본 제공 폼을 사용하는 것

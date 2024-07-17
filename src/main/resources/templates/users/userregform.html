@@ -1,26 +1,34 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>회원 가입</title>
 </head>
 <body>
 <a href="/" id="logo">Chanslog</a><br>
-<h2>회원 가입</h2>
-<form action="/userreg" method="post">
-    <label for="username">아이디 : </label>
-    <input type="text" id="username" name="username" required><br><br>
 
-    <label for="password">비밀 번호 : </label>
-    <input type="password" id="password" name="password" required><br><br>
+<div sec:authorize="isAnonymous()">
+    <h2>회원 가입</h2>
+    <form action="/userreg" method="post">
+        <label for="username">아이디 : </label>
+        <input type="text" id="username" name="username" required><br><br>
 
-    <label for="name">이름 : </label>
-    <input type="text" id="name" name="name" required><br><br>
+        <label for="password">비밀 번호 : </label>
+        <input type="password" id="password" name="password" required><br><br>
 
-    <label for="email">이메일: </label>
-    <input type="email" id="email" name="email" required><br><br>
+        <label for="name">이름 : </label>
+        <input type="text" id="name" name="name" required><br><br>
 
-    <button type="submit">가입하기</button>
-</form>
+        <label for="email">이메일: </label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <button type="submit">가입하기</button>
+    </form>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    <p style="color: red;">이미 로그인되어 있습니다!</p>
+</div>
+
 </body>
 </html>

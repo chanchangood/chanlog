@@ -3,21 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <title>개인 블로그 - [[${username}]]</title>
+    <link rel="stylesheet" type="text/css" href="/css/userBlog.css">
 </head>
 <body>
 <a href="/" id="logo">Chanslog</a><br>
 
-<h1><span sec:authentication="name"></span>의 블로그</h1>
-
-<a href="/boards/postForm">글쓰기</a><br>
-
 <div>
-    <h2>게시글 목록</h2>
-    <ul>
-        <li th:each="board : ${boards}">
-            <a th:href="@{/boards/{id}(id=${board.id})}">[[${board.title}]]</a>
-        </li>
-    </ul>
+    <h1 th:text="${username} + '의 블로그'"></h1>
+
+    <div sec:authorize="isAuthenticated()">
+        <a href="/boards/postForm">글쓰기</a><br>
+    </div>
+
+    <div class="post-list">
+        <h2>게시글 목록</h2>
+
+        <div class="card-container">
+
+            <div class="card" th:each="board : ${boards}">
+
+                <a class="link" th:href="@{/boards/board/{id}(id=${board.id})}">
+
+                    <div class="card-header">
+                        <h3 th:text="${board.title}"></h3>
+                    </div>
+
+                    <div class="card-body">
+                        <p th:text="'작성자: ' + ${board.author.username}"></p>
+                        <p th:text="${#temporals.format(board.createdAt, 'yyyy-MM-dd')}"></p>
+                    </div>
+
+                </a>
+
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${boards.totalPages > 1}" class="pagination">
+        <ul>
+            <li th:if="${boards.hasPrevious()}">
+                <a th:href="@{/userBlog/{username}(username=${user.username}, page=${boards.number})}" th:text="'이전'"></a>
+            </li>
+
+            <li th:each="i : ${#numbers.sequence(1, boards.totalPages)}">
+                <a th:href="@{/userBlog/{username}(username=${user.username}, page=${i})}" th:text="${i}"
+                   th:class="${i == boards.number + 1} ? 'active' : ''"></a>
+            </li>
+
+            <li th:if="${boards.hasNext()}">
+                <a th:href="@{/userBlog/{username}(username=${user.username}, page=${boards.number + 2})}" th:text="'다음'"></a>
+            </li>
+        </ul>
+    </div>
 </div>
+
 </body>
 </html>

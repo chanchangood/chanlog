@@ -26,26 +26,47 @@ public class BoardController {
     private final BoardService boardService;
     private final UserRepository userRepository;
 
-
-    @GetMapping("/{username}")
-    public String userblog(Model model, @RequestParam(defaultValue = "1") int page,
-                           @RequestParam(defaultValue = "5") int size) {
+    @GetMapping("/")
+    public String home(Model model,
+                       @RequestParam(defaultValue = "1") int page,
+                       @RequestParam(defaultValue = "5") int size) {
 
         Pageable pageable = PageRequest.of(page - 1, size);
-        Page<Board> boards = boardService.findPaginated(pageable);
+        Page<Board> latestBoards = boardService.findLatestBoards(pageable);
+
+        model.addAttribute("latestBoards", latestBoards);
+
+        return "home";
+    }
+
+
+    @GetMapping("/userBlog/{username}")
+    public String userBlog(Model model,
+                           @RequestParam(defaultValue = "1") int page,
+                           @RequestParam(defaultValue = "5") int size,
+                           @PathVariable String username) {
+
+        User user = userRepository.findByUsername(username);
+
+        Pageable pageable = PageRequest.of(page - 1, size);
+        Page<Board> boards = boardService.findPaginatedByUser(pageable, user);
+
         model.addAttribute("boards", boards);
         model.addAttribute("currentPage", page);
+        model.addAttribute("user", user);
+
+
         return "userBlog";
     }
 
-    //    @GetMapping("/view/{id}")
-//    public String boardView(@PathVariable Long id, Model model) {
-//        Board board = boardService.findById(id);
-//        model.addAttribute("board", board);
-//
-//        return "view";
-//    }
-//
+    @GetMapping("/boards/board/{id}")
+    public String boardView(@PathVariable Long id, Model model) {
+        Board board = boardService.findById(id);
+        model.addAttribute("board", board);
+
+        return "boards/board";
+    }
+
     @GetMapping("/boards/postForm")
     public String postForm(Model model) {
         model.addAttribute("board", new Board());
@@ -72,7 +93,7 @@ public class BoardController {
         boardService.saveBoard(board);
 
         redirectAttributes.addFlashAttribute("message", "게시글이 성공적으로 작성되었습니다.");
-        return "redirect:/userBlog";
+        return "redirect:/userBlog/" + currentUser.getUsername();
     }
 //
 //    @GetMapping("/deleteForm/{id}")

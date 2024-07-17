@@ -1,15 +1,17 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>welcome</title>
 </head>
 <body>
 <a href="/" id="logo">Chanslog</a><br>
-<h2>환영합니다.</h2>
-<p>회원가입에 성공 하셨습니다. </p>
-<a href="/">홈으로</a>
-<a href="/mypage">내 정보 보기</a>
-<a href="/logout">로그아웃</a>
+<div sec:authorize="isAuthenticated()">
+    <h2>환영합니다.</h2>
+    <p>회원가입에 성공 하셨습니다. </p>
+    <a href="/">홈으로</a>
+    <a href="/mypage">내 정보 보기</a>
+    <a href="/logout">로그아웃</a>
+</div>
 </body>
 </html>

@@ -31,11 +31,6 @@ public class UserController {
     private final SocialLoginInfoService socialLoginInfoService;
 
 
-    @GetMapping("/")
-    public String home() {
-        return "home";
-    }
-
     @GetMapping("/mypage")
     public String mypage() {
         return "/mypage";

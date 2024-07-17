@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +7,7 @@
 </head>
 <body>
 <a href="/" id="logo">Chanslog</a><br>
-<div class="container">
+<div class="container" sec:authorize="isAnonymous()">
     <h1>환영합니다!</h1>
     <p>기본 회원 정보를 등록해주세요.</p>
     <form th:action="@{/saveSocialUser}" method="post">
@@ -34,5 +34,10 @@
         </div>
     </form>
 </div>
+
+<div sec:authorize="isAuthenticated()">
+    <p style="color: red;">이미 로그인되어 있습니다!</p>
+</div>
+
 </body>
 </html>

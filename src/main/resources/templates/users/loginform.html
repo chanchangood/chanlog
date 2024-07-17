@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <title>login</title>
@@ -8,6 +8,7 @@
 <a href="/" id="logo">Chanslog</a><br>
 <h2>라이언 로그인</h2>
 
+<div sec:authorize="isAnonymous()">
 <!-- 에러 메시지가 있는 경우에만 출력 -->
 <div th:if="${param.error}">
     <p style="color: red;">아이디 또는 비밀번호가 일치하지 않습니다. 다시 시도해주세요.</p>
@@ -28,6 +29,11 @@
 
 <div>
     <a href="/userregform">회원가입</a>
+</div>
+</div>
+
+<div sec:authorize="isAuthenticated()">
+    <p style="color: red;">이미 로그인되어 있습니다!</p>
 </div>
 
 </body>
