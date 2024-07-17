@@ -60,7 +60,7 @@ public class CustomOAuth2AuthenticationSuccessHandler implements AuthenticationS
             Authentication newAuth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(newAuth);
 
-            response.sendRedirect("/welcome");
+            response.sendRedirect("/");
 
 
     }else{// 소셜로 아직 회원가입이 안되어 있을 때 소셜 로그인 정보 저장
