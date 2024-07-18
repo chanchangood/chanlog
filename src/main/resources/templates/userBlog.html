@@ -11,9 +11,14 @@
 <div>
     <h1 th:text="${username} + '의 블로그'"></h1>
 
-    <div sec:authorize="isAuthenticated()">
-        <a href="/boards/postForm">글쓰기</a><br>
+    <div class="auth" sec:authorize="isAuthenticated()">
+        <p>안녕하세요. <span sec:authentication="name"></span>님^^ </p>
+        <a href="/mypage">내 정보보기</a><br>
+        <a href="/boards/postForm" class="button">글쓰기</a><br>
+        <a href="/logout">로그아웃</a>
+
     </div>
+
 
     <div class="post-list">
         <h2>게시글 목록</h2>
@@ -42,7 +47,8 @@
     <div th:if="${boards.totalPages > 1}" class="pagination">
         <ul>
             <li th:if="${boards.hasPrevious()}">
-                <a th:href="@{/userBlog/{username}(username=${user.username}, page=${boards.number})}" th:text="'이전'"></a>
+                <a th:href="@{/userBlog/{username}(username=${user.username}, page=${boards.number})}"
+                   th:text="'이전'"></a>
             </li>
 
             <li th:each="i : ${#numbers.sequence(1, boards.totalPages)}">
@@ -51,12 +57,12 @@
             </li>
 
             <li th:if="${boards.hasNext()}">
-                <a th:href="@{/userBlog/{username}(username=${user.username}, page=${boards.number + 2})}" th:text="'다음'"></a>
+                <a th:href="@{/userBlog/{username}(username=${user.username}, page=${boards.number + 2})}"
+                   th:text="'다음'"></a>
             </li>
         </ul>
     </div>
 </div>
-
 
 
 <script>
