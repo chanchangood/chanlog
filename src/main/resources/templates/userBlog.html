@@ -5,7 +5,7 @@
     <title>개인 블로그 - [[${username}]]</title>
     <link rel="stylesheet" type="text/css" href="/css/userBlog.css">
 </head>
-<body>
+<body onload="init()">
 <a href="/" id="logo">Chanslog</a><br>
 
 <div>
@@ -56,6 +56,24 @@
         </ul>
     </div>
 </div>
+
+
+
+<script>
+    function init() {
+        const successMessage = '[[${success}]]';
+        const errorMessage = '[[${error}]]';
+
+        if (successMessage) {
+            alert(successMessage);
+        }
+
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    }
+</script>
+
 
 </body>
 </html>

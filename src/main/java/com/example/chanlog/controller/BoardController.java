@@ -26,10 +26,11 @@ public class BoardController {
     private final BoardService boardService;
     private final UserRepository userRepository;
 
+//    홈페이지
     @GetMapping("/")
     public String home(Model model,
                        @RequestParam(defaultValue = "1") int page,
-                       @RequestParam(defaultValue = "5") int size) {
+                       @RequestParam(defaultValue = "9") int size) {
 
         Pageable pageable = PageRequest.of(page - 1, size);
         Page<Board> latestBoards = boardService.findLatestBoards(pageable);
@@ -39,11 +40,11 @@ public class BoardController {
         return "home";
     }
 
-
+//    개인 블로그
     @GetMapping("/userBlog/{username}")
     public String userBlog(Model model,
                            @RequestParam(defaultValue = "1") int page,
-                           @RequestParam(defaultValue = "5") int size,
+                           @RequestParam(defaultValue = "9") int size,
                            @PathVariable String username) {
 
         User user = userRepository.findByUsername(username);
@@ -59,6 +60,8 @@ public class BoardController {
         return "userBlog";
     }
 
+
+//    게시글 상세 페이지
     @GetMapping("/boards/board/{id}")
     public String boardView(@PathVariable Long id, Model model) {
         Board board = boardService.findById(id);
@@ -67,6 +70,7 @@ public class BoardController {
         return "boards/board";
     }
 
+//    게시글 작성 폼
     @GetMapping("/boards/postForm")
     public String postForm(Model model) {
         model.addAttribute("board", new Board());
@@ -81,9 +85,10 @@ public class BoardController {
 
         // Authentication에서 username 가져오기
         String username = authentication.getName();
-
         // UserRepository를 통해 User 객체 가져오기
         User currentUser = userRepository.findByUsername(username);
+
+
         if (currentUser == null) {
             throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
         }
@@ -95,48 +100,64 @@ public class BoardController {
         redirectAttributes.addFlashAttribute("message", "게시글이 성공적으로 작성되었습니다.");
         return "redirect:/userBlog/" + currentUser.getUsername();
     }
-//
-//    @GetMapping("/deleteForm/{id}")
-//    public String deleteForm(@PathVariable Long id, Model model) {
-//        Board board = boardService.findById(id);
-//        model.addAttribute("board", board);
-//        return "deleteForm";
-//    }
-//
-//    public boolean verifyPassword(@PathVariable Long id, @PathVariable String password) {
-//        Board board = boardService.findById(id);
-//        return password.equals(board.getPassword());
-//    }
-//
-//    @PostMapping("/deleteForm")
-//    public String deleteBoard(@ModelAttribute Board board, Model model, RedirectAttributes redirectAttributes) {
-//        if (!verifyPassword(board.getId(), board.getPassword())) {
-//            model.addAttribute("message", "잘못된 비밀번호 입니다.");
-//            return "deleteForm";
-//        }
-//        boardService.deleteById(board.getId());
-//        redirectAttributes.addFlashAttribute("message", "게시글이 성공적으로 삭제되었습니다");
-//        return "redirect:/list";
-//    }
-//
-//    @GetMapping("/updateForm/{id}")
-//    public String updateForm(@PathVariable Long id, Model model) {
-//        Board board = boardService.findById(id);
-//        model.addAttribute("board", board);
-//        return "/updateForm";
-//    }
-//
-//    @PostMapping("/updateForm")
-//    public String updateBoard(@ModelAttribute Board board, Model model) {
-//        if (!verifyPassword(board.getId(), board.getPassword())) {
-//            model.addAttribute("message", "잘못된 비밀번호 입니다.");
-//            return "updateForm";
-//        }
-//
-//        long id = board.getId();
-//        boardService.saveBoard(board);
-//        return "redirect:/view/" + id;
-//    }
+
+//    게시글 삭제 폼
+    @GetMapping("/boards/deleteForm/{id}")
+    public String deleteForm(@PathVariable Long id, Model model) {
+        Board board = boardService.findById(id);
+        model.addAttribute("board", board);
+        return "boards/deleteForm";
+    }
+
+
+
+    @PostMapping("/deleteForm")
+    public String deleteBoard(@ModelAttribute Board board,
+                              Authentication authentication,
+                              RedirectAttributes redirectAttributes) {
+
+        String username = authentication.getName();
+        Board currentBoard = boardService.findById(board.getId());
+        if (!currentBoard.getAuthor().getUsername().equals(username)) {
+            redirectAttributes.addFlashAttribute("error", "권한 없음 : 게시글 작성자가 아닙니다!");
+            return "redirect:/boards/board/" + board.getId();
+        }
+
+        boardService.deleteById(board.getId());
+
+        redirectAttributes.addFlashAttribute("success", "게시글이 정상적으로 삭제되었습니다.");
+        return "redirect:/userBlog/" + username;
+    }
+
+
+
+//    게시글 수정 폼
+    @GetMapping("/boards/updateForm/{id}")
+    public String updateForm(@PathVariable Long id, Model model) {
+        Board board = boardService.findById(id);
+        model.addAttribute("board", board);
+        return "boards/updateForm";
+    }
+
+    @PostMapping("/updateForm")
+    public String updateBoard(@ModelAttribute Board board,
+                              Authentication authentication,
+                              RedirectAttributes redirectAttributes) {
+
+        String username = authentication.getName();
+        Board currentBoard = boardService.findById(board.getId());
+        if (!currentBoard.getAuthor().getUsername().equals(username)) {
+            redirectAttributes.addFlashAttribute("error", "권한 없음 : 게시글 작성자가 아닙니다!");
+            return "redirect:/boards/board/" + board.getId();
+        }
+
+
+        boardService.saveBoard(board);
+        redirectAttributes.addFlashAttribute("success", "게시글이 성공적으로 업데이트되었습니다.");
+
+
+        return "redirect:/boards/board/" + board.getId();
+    }
 
 
 }

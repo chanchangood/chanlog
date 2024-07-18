@@ -1,21 +1,18 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
-    <title>새로운 보드 작성</title>
-    <link rel="stylesheet" th:href="@{/css/postForm.css}">
+    <title>Delete Board</title>
+    <link rel="stylesheet" href="/css/updateForm.css">
 </head>
 <body>
 <a href="/" id="logo">Chanslog</a><br>
 
 <div class="box">
-    <h1>새로운 게시글 작성</h1>
+    <h1>게시글 수정</h1>
 
-    <div th:if="${message}" class="alert">
-        <p th:text="${message}"></p>
-    </div>
 
-    <form th:action="@{/postForm}" method="post" th:object="${board}">
+    <form th:action="@{/updateForm}" method="post" th:object="${board}">
         <input type="hidden" th:field="*{id}">
         <input type="hidden" th:field="*{author}">
 
@@ -35,7 +32,8 @@
         </div>
 
         <div>
-            <input type="submit" value="Create">
+            <button type="submit">수정</button>
+            <a href="/boards/board/${board.id}">취소</a>
         </div>
     </form>
 
