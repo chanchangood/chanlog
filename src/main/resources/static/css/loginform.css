@@ -1,0 +1,96 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    text-decoration: none;
+}
+
+.link {
+    text-decoration: none;
+    color: #333333;
+}
+
+#logo {
+    text-decoration: none;
+    font-size: 24px;
+    color: #007BFF;
+}
+
+.form-container {
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.form-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.form-container input[type=text],
+.form-container input[type=password] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    font-size: 16px;
+}
+
+.form-container button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 3px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.form-container button:hover {
+    background-color: #0056b3;
+}
+
+.error-message {
+    color: red;
+    margin-bottom: 15px;
+}
+
+.btn-github {
+    display: inline-block;
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 3px;
+    margin-top: 10px;
+}
+
+.btn-github:hover {
+    background-color: #444;
+}
+
+.link {
+    text-decoration: none;
+    color: #007BFF;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
